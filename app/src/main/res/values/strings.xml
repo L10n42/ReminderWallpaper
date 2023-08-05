@@ -1,3 +1,43 @@
 <resources>
     <string name="app_name">Reminder Wallpaper</string>
+    <string name="wallpapers_title">Wallpapers</string>
+    <string name="new_wallpaper_title">New Wallpaper</string>
+    <string name="new_quote_wallpaper_title">New quote wallpaper</string>
+    <string name="new_progress_wallpaper_title">New progress wallpaper</string>
+    <string name="new_text_wallpaper_title">New text wallpaper</string>
+    <string name="quote_hint">Quote</string>
+    <string name="goal_hint">Goal</string>
+    <string name="text_hint">Text</string>
+    <string name="author_hint">Author</string>
+    <string name="background_title">Background</string>
+    <string name="foreground_title">Foreground</string>
+    <string name="text_color_title">Text color</string>
+    <string name="chart_color_title">Chart color</string>
+    <string name="done_btn">Done</string>
+    <string name="save_btn">Save</string>
+    <string name="set_as_wallpaper">Set as wallpaper</string>
+    <string name="title_activity_save">SaveActivity</string>
+    <string name="back_title">Back</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="ok_btn">Cancel</string>
+    <string name="select_btn">Select</string>
+    <string name="copied_msg">copied</string>
+    <string name="share_image_title">Share Via</string>
+    <string name="title_activity_overview">OverviewActivity</string>
+    <string name="couldnt_save_image">couldn\'t save image</string>
+    <string name="couldnt_remove_image">couldn\'t remove image</string>
+    <string name="remove_title">Remove</string>
+    <string name="remove_msg">Are you sure you want to remove this wallpaper permanently?</string>
+
+    <string name="all_title_tab">All</string>
+    <string name="quote_title_tab">Quote</string>
+    <string name="text_title_tab">Text</string>
+
+    <string name="quote_title">Quote</string>
+    <string name="text_title">Text</string>
+    <string name="progress_title">Progress</string>
+    <string name="bold_title">Bold</string>
+    <string name="italic_title">Italic</string>
+    <string name="something_went_wrong_msg">Something went wrong</string>
+
 </resources>
