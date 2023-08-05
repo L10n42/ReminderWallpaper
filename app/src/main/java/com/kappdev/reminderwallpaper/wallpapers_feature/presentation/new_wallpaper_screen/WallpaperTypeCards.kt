@@ -6,8 +6,9 @@ import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.WallpaperTy
 object WallpaperTypeCards {
 
     val list = listOf(
-        WallpaperTypeCard(R.drawable.test_image_1, R.string.quote_title, WallpaperType.Quote),
-        WallpaperTypeCard(R.drawable.test_image_2, R.string.text_title, WallpaperType.Text),
-        WallpaperTypeCard(R.drawable.test_image_2, R.string.progress_title, WallpaperType.Progress)
+        WallpaperTypeCard(R.drawable.quote_example, R.string.quote_title, WallpaperType.Quote),
+        WallpaperTypeCard(R.drawable.text_example, R.string.text_title, WallpaperType.Text),
+        WallpaperTypeCard(R.drawable.progress_example, R.string.progress_title, WallpaperType.Progress),
+        WallpaperTypeCard(R.drawable.text_example, R.string.poster_title, WallpaperType.Poster)
     )
 }

@@ -20,15 +20,15 @@ import com.kappdev.reminderwallpaper.core.common.components.VerticalSpace
 
 @Composable
 fun CompleteSlider(
-    complete: Int,
+    complete: Float,
     modifier: Modifier = Modifier,
-    onCompleteChange: (Int) -> Unit
+    onCompleteChange: (Float) -> Unit
 ) {
     val (value, setValue) = remember { mutableFloatStateOf(0f) }
     val percent = (value * 100).toInt()
 
     LaunchedEffect(complete) {
-        setValue(complete / 100f)
+        setValue(complete)
     }
 
     Column(modifier = modifier) {
@@ -43,7 +43,7 @@ fun CompleteSlider(
             modifier = Modifier.fillMaxWidth(),
             onValueChange = setValue,
             onValueChangeFinished = {
-                onCompleteChange(percent)
+                onCompleteChange(value)
             }
         )
     }

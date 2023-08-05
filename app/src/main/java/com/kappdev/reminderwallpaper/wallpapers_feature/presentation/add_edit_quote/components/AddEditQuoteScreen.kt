@@ -1,7 +1,5 @@
 package com.kappdev.reminderwallpaper.wallpapers_feature.presentation.add_edit_quote.components
 
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,13 +20,12 @@ import com.kappdev.reminderwallpaper.core.common.components.FontSizeSlider
 import com.kappdev.reminderwallpaper.core.common.components.ForegroundColorSelector
 import com.kappdev.reminderwallpaper.core.common.components.LoadingDialog
 import com.kappdev.reminderwallpaper.core.common.components.VerticalSpace
-import com.kappdev.reminderwallpaper.core.navigation.Screen
 import com.kappdev.reminderwallpaper.core.util.showToast
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.WallpaperType
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.add_edit_quote.AddEditQuoteViewModel
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.common.ColorPickerState
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.common.components.AddEditScreen
-import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.save_wallpaper_screen.SaveActivity
+import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.save_wallpaper_screen.rememberSaveActivityLauncher
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.save_wallpaper_screen.saveActivityIntent
 
 @Composable
@@ -53,14 +50,7 @@ fun AddEditQuoteScreen(
         LoadingDialog()
     }
 
-    val saveWallpaperActivity = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult(),
-        onResult = { result ->
-            if (result.resultCode == SaveActivity.WALLPAPER_SAVED_RESULT) {
-                navController.navigate(Screen.HomeScreen.route)
-            }
-        }
-    )
+    val saveWallpaperActivity = rememberSaveActivityLauncher(navController)
 
     AddEditScreen(
         title = stringResource(R.string.new_quote_wallpaper_title),
@@ -84,7 +74,9 @@ fun AddEditQuoteScreen(
             value = quote,
             hint = stringResource(R.string.quote_hint),
             onValueChange = viewModel::setQuote,
-            modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 32.dp),
             imeAction = ImeAction.Next,
             onImeAction = { focusManager ->
                 focusManager.moveFocus(FocusDirection.Down)

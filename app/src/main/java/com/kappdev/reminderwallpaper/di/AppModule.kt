@@ -9,6 +9,8 @@ import com.kappdev.reminderwallpaper.wallpapers_feature.domain.use_case.GetWallp
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.use_case.GetWallpapers
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.use_case.InsertWallpaper
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.use_case.MoveToImages
+import com.kappdev.reminderwallpaper.wallpapers_feature.domain.use_case.PosterPainter
+import com.kappdev.reminderwallpaper.wallpapers_feature.domain.use_case.ProgressPainter
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.use_case.QuotesPainter
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.use_case.RemoveWallpaper
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.use_case.SetWallpaper
@@ -50,6 +52,18 @@ object AppModule {
     @Singleton
     fun provideTextPainter(app: Application): TextPainter {
         return TextPainter(app)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProgressPainter(app: Application): ProgressPainter {
+        return ProgressPainter(app)
+    }
+
+    @Provides
+    @Singleton
+    fun providePosterPainter(app: Application): PosterPainter {
+        return PosterPainter(app)
     }
 
     @Provides

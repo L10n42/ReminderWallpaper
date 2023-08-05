@@ -1,4 +1,4 @@
-package com.kappdev.reminderwallpaper.wallpapers_feature.presentation.add_edit_text.components
+package com.kappdev.reminderwallpaper.wallpapers_feature.presentation.common.components
 
 import android.text.Layout
 import androidx.compose.foundation.layout.Arrangement

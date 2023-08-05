@@ -4,6 +4,7 @@
     <string name="new_wallpaper_title">New Wallpaper</string>
     <string name="new_quote_wallpaper_title">New quote wallpaper</string>
     <string name="new_progress_wallpaper_title">New progress wallpaper</string>
+    <string name="new_poster_wallpaper_title">New poster wallpaper</string>
     <string name="new_text_wallpaper_title">New text wallpaper</string>
     <string name="quote_hint">Quote</string>
     <string name="goal_hint">Goal</string>
@@ -19,7 +20,7 @@
     <string name="title_activity_save">SaveActivity</string>
     <string name="back_title">Back</string>
     <string name="cancel_btn">Cancel</string>
-    <string name="ok_btn">Cancel</string>
+    <string name="ok_btn">OK</string>
     <string name="select_btn">Select</string>
     <string name="copied_msg">copied</string>
     <string name="share_image_title">Share Via</string>
@@ -27,17 +28,23 @@
     <string name="couldnt_save_image">couldn\'t save image</string>
     <string name="couldnt_remove_image">couldn\'t remove image</string>
     <string name="remove_title">Remove</string>
+    <string name="select_image_msg">Select image</string>
     <string name="remove_msg">Are you sure you want to remove this wallpaper permanently?</string>
 
     <string name="all_title_tab">All</string>
     <string name="quote_title_tab">Quote</string>
     <string name="text_title_tab">Text</string>
+    <string name="progress_title_tab">Progress</string>
 
     <string name="quote_title">Quote</string>
     <string name="text_title">Text</string>
     <string name="progress_title">Progress</string>
+    <string name="poster_title">Poster</string>
     <string name="bold_title">Bold</string>
     <string name="italic_title">Italic</string>
     <string name="something_went_wrong_msg">Something went wrong</string>
+    <string name="image_title">Image</string>
+    <string name="info_title">Info</string>
+    <string name="image_max_size_info_msg">Max size for image is %s. If the image is larger it will be resized.</string>
 
 </resources>

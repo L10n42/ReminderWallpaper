@@ -1,4 +1,4 @@
-package com.kappdev.reminderwallpaper.wallpapers_feature.presentation.add_edit_text.components
+package com.kappdev.reminderwallpaper.wallpapers_feature.presentation.common.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth

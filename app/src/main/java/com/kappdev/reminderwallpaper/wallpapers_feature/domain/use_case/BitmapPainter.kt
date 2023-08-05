@@ -6,6 +6,8 @@ import android.graphics.Canvas
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.Dp
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.util.ScreenUtils
 import kotlin.math.roundToInt
 
@@ -14,6 +16,7 @@ open class BitmapPainter(
 ) {
     private val resources = context.resources
     private val scale = resources.displayMetrics.density
+    private val density = Density(context)
     private val screenWidth = ScreenUtils.getAbsoluteWidth(context)
     private val screenHeight = ScreenUtils.getAbsoluteHeight(context)
 
@@ -40,11 +43,15 @@ open class BitmapPainter(
         return bitmap
     }
 
+    protected fun Dp.toPixels(): Float {
+        return with(density) { this@toPixels.toPx() }
+    }
+
     protected fun Int.toPixel(): Float {
         return (this * scale).roundToInt().toFloat()
     }
 
-    protected companion object {
+    companion object {
         const val DEFAULT_EDGE_PADDING = 200
     }
 }

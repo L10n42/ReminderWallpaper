@@ -4,9 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import com.kappdev.reminderwallpaper.core.navigation.Screen
 import com.kappdev.reminderwallpaper.ui.theme.ReminderWallpaperTheme
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.WallpaperType
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.valueOf
@@ -74,6 +79,16 @@ class SaveActivity : ComponentActivity() {
         ActivityHelper.hideSystemUI(window)
     }
 }
+
+@Composable
+fun rememberSaveActivityLauncher(navController: NavHostController) = rememberLauncherForActivityResult(
+    contract = ActivityResultContracts.StartActivityForResult(),
+    onResult = { result ->
+        if (result.resultCode == SaveActivity.WALLPAPER_SAVED_RESULT) {
+            navController.navigate(Screen.HomeScreen.route)
+        }
+    }
+)
 
 fun Context.saveActivityIntent(path: String, type: WallpaperType): Intent {
     val saveActivity = Intent(this, SaveActivity::class.java)

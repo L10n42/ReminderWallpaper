@@ -55,6 +55,7 @@ fun NewWallpaperScreen(
                         is WallpaperType.Quote -> navController.navigate(Screen.AddEditQuoteScreen.route)
                         is WallpaperType.Text -> navController.navigate(Screen.AddEditTextScreen.route)
                         is WallpaperType.Progress -> navController.navigate(Screen.AddEditProgressScreen.route)
+                        is WallpaperType.Poster -> navController.navigate(Screen.AddEditPosterScreen.route)
                     }
                 }
             }
