@@ -1,12 +1,15 @@
 package com.kappdev.reminderwallpaper.core.common.components
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -43,13 +46,19 @@ fun ConfirmationDialog(
             )
         },
         confirmButton = {
-            Button(confirmText) {
+            Button(
+                text = confirmText,
+                color = MaterialTheme.colorScheme.error
+            ) {
                 closeDialog()
                 onConfirm()
             }
         },
         dismissButton = {
-            Button(cancelText) {
+            Button(
+                text = cancelText,
+                color = MaterialTheme.colorScheme.primary
+            ) {
                 closeDialog()
                 onCancel()
             }
@@ -58,15 +67,18 @@ fun ConfirmationDialog(
 }
 
 @Composable
-private fun Button(text: String, onClick: () -> Unit) {
-    TextButton(
-        onClick = onClick,
+private fun Button(
+    text: String,
+    color: Color,
+    onClick: () -> Unit
+) {
+    Text(
+        text = text,
+        fontSize = 16.sp,
+        color = color,
         modifier = Modifier
-    ) {
-        Text(
-            text = text,
-            fontSize = 16.sp,
-            color = MaterialTheme.colorScheme.primary
-        )
-    }
+            .clip(RoundedCornerShape(4.dp))
+            .clickable(onClick = onClick)
+            .padding(2.dp)
+    )
 }

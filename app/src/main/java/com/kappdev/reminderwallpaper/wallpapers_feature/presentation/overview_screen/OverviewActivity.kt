@@ -10,7 +10,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.kappdev.reminderwallpaper.ui.theme.ReminderWallpaperTheme
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.util.ActivityHelper
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.overview_screen.components.OverviewImageScreen
-import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.overview_screen.components.OverviewImageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

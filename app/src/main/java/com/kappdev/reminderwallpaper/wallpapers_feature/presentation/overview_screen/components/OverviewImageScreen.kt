@@ -10,7 +10,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBackIos
 import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.IosShare
+import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +30,7 @@ import coil.compose.SubcomposeAsyncImage
 import com.kappdev.reminderwallpaper.R
 import com.kappdev.reminderwallpaper.core.common.components.ConfirmationDialog
 import com.kappdev.reminderwallpaper.core.common.components.TransparencyImageButton
+import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.overview_screen.OverviewImageViewModel
 
 @Composable
 fun OverviewImageScreen(
@@ -118,7 +119,7 @@ private fun OverviewTopBar(
         actions = {
             IconButton(onClick = onShare) {
                 Icon(
-                    imageVector = Icons.Rounded.IosShare,
+                    imageVector = Icons.Rounded.Share,
                     contentDescription = stringResource(R.string.share_wallpaper_btn),
                     tint = contentColor
                 )

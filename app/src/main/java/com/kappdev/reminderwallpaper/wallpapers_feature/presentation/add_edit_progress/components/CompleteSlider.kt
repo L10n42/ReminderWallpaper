@@ -52,6 +52,6 @@ fun CompleteSlider(
 private fun buildTitle(value: Int) = buildAnnotatedString {
     append("Complete: ")
     withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-        append(value.toString())
+        append("$value%")
     }
 }

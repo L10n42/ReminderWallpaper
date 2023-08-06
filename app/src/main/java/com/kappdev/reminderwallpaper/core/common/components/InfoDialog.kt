@@ -1,22 +1,22 @@
 package com.kappdev.reminderwallpaper.core.common.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kappdev.reminderwallpaper.R
@@ -30,6 +30,11 @@ fun InfoDialog(
     closeDialog: () -> Unit,
     onClick: () -> Unit,
 ) {
+    val closeAndClick = {
+        closeDialog()
+        onClick()
+    }
+
     AlertDialog(
         onDismissRequest = closeDialog
     ) {
@@ -44,36 +49,33 @@ fun InfoDialog(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(DialogPadding)
                 )
 
                 Text(
                     text = message,
                     fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier = Modifier.padding(horizontal = DialogPadding)
                 )
 
-                VerticalSpace(16.dp)
+                VerticalSpace(DialogPadding)
                 Divider()
 
-                TextButton(
-                    onClick = {
-                        closeDialog()
-                        onClick()
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.textButtonColors(
-                        containerColor = Color.Transparent
-                    )
-                ) {
-                    Text(
-                        text = buttonText,
-                        fontSize = 16.sp,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
+                Text(
+                    text = buttonText,
+                    fontSize = 16.sp,
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(onClick = closeAndClick)
+                        .padding(vertical = 12.dp)
+                )
             }
         }
     }
 }
+
+private val DialogPadding = 20.dp

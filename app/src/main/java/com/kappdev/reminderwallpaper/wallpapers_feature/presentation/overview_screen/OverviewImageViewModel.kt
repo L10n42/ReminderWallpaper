@@ -1,4 +1,4 @@
-package com.kappdev.reminderwallpaper.wallpapers_feature.presentation.overview_screen.components
+package com.kappdev.reminderwallpaper.wallpapers_feature.presentation.overview_screen
 
 import android.app.Application
 import androidx.compose.runtime.getValue
@@ -16,7 +16,6 @@ import com.kappdev.reminderwallpaper.wallpapers_feature.domain.use_case.ShareIma
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel

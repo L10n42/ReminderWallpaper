@@ -1,6 +1,9 @@
 package com.kappdev.reminderwallpaper.wallpapers_feature.presentation.home_screen.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.VisibilityThreshold
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Column
@@ -20,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.ui.TopAppBarContent
@@ -90,8 +94,14 @@ private fun Content(
 ) {
     AnimatedVisibility(
         visible = isVisible,
-        enter = expandVertically(expandFrom = Alignment.Top),
-        exit = shrinkVertically(shrinkTowards = Alignment.Top)
+        enter = expandVertically(
+            animationSpec = spring(stiffness = Spring.StiffnessHigh),
+            expandFrom = Alignment.Top
+        ),
+        exit = shrinkVertically(
+            animationSpec = spring(stiffness = Spring.StiffnessHigh),
+            shrinkTowards = Alignment.Top
+        )
     ) {
         TopAppBarContent(
             title = {
