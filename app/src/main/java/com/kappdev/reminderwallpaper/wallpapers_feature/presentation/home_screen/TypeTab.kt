@@ -6,5 +6,6 @@ enum class TypeTab(val titleRes: Int) {
     ALL(R.string.all_title_tab),
     QUOTE(R.string.quote_title_tab),
     TEXT(R.string.text_title_tab),
-    PROGRESS(R.string.progress_title_tab)
+    PROGRESS(R.string.progress_title_tab),
+    POSTER(R.string.poster_title)
 }

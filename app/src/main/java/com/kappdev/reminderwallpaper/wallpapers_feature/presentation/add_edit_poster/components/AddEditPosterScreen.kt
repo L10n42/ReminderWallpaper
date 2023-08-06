@@ -5,7 +5,9 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -50,14 +52,14 @@ fun AddEditPosterScreen(
     var showImageInfoDialog by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
     val text = viewModel.text.value
-    val textAlign = viewModel.textAlign.value
-    val textStyle = viewModel.textStyle.value
+    val image = viewModel.image.value
     val fontSize = viewModel.fontSize.value
+    val textAlign = viewModel.textAlign.value
+    val isLoading = viewModel.isLoading.value
+    val textStyle = viewModel.textStyle.value
     val background = viewModel.background.value
     val foreground = viewModel.foreground.value
     val currentSheet = viewModel.sheetState.value
-    val isLoading = viewModel.isLoading.value
-    val image = viewModel.image.value
 
     if (currentSheet != null) {
         BottomSheetController(currentSheet, viewModel)
@@ -166,8 +168,8 @@ fun AddEditPosterScreen(
                 model = image,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .height(100.dp)
-                    .width(200.dp)
+                    .heightIn(50.dp, 250.dp)
+                    .widthIn(50.dp, 200.dp)
                     .clip(RoundedCornerShape(4.dp))
             )
         }

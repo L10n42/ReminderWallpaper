@@ -64,7 +64,7 @@ fun ForegroundColorSelector(
     val context = LocalContext.current
     val foregroundColors = flow {
         context.dataStore.data.map { pref ->
-            pref[FOREGROUND_COLORS].parseColors()
+            pref[ForegroundColorsKey].parseColors()
         }.collect {
             this.emit(it)
         }
@@ -92,7 +92,7 @@ fun BackgroundColorSelector(
     val context = LocalContext.current
     val backgroundColors = flow {
         context.dataStore.data.map { pref ->
-            pref[BACKGROUND_COLORS].parseColors()
+            pref[BackgroundColorsKey].parseColors()
         }.collect {
             this.emit(it)
         }
@@ -241,11 +241,11 @@ private val jsonType = object : TypeToken<List<Color>>() {}.type
 private val Context.dataStore by preferencesDataStore("colors")
 
 private suspend fun addBackgroundColor(context: Context, color: Color) {
-    addColor(context, color, BACKGROUND_COLORS)
+    addColor(context, color, BackgroundColorsKey)
 }
 
 private suspend fun addForegroundColor(context: Context, color: Color) {
-    addColor(context, color, FOREGROUND_COLORS)
+    addColor(context, color, ForegroundColorsKey)
 }
 
 private suspend fun addColor(context: Context, color: Color, key: Preferences.Key<String>) {
@@ -283,8 +283,8 @@ private fun MutableList<Color>.checkBalance() {
 
 private const val MAX_SIZE = 30
 
-private val BACKGROUND_COLORS = stringPreferencesKey("background_colors")
-private val FOREGROUND_COLORS = stringPreferencesKey("foreground_colors")
+private val BackgroundColorsKey = stringPreferencesKey("background_colors")
+private val ForegroundColorsKey = stringPreferencesKey("foreground_colors")
 
 
 

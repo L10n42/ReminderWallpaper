@@ -45,6 +45,7 @@ class HomeViewModel @Inject constructor(
             TypeTab.QUOTE -> allWallpapers.filter { it.type == WallpaperType.Quote }
             TypeTab.TEXT -> allWallpapers.filter { it.type == WallpaperType.Text }
             TypeTab.PROGRESS -> allWallpapers.filter { it.type == WallpaperType.Progress }
+            TypeTab.POSTER -> allWallpapers.filter { it.type == WallpaperType.Poster }
         }
     }
 }

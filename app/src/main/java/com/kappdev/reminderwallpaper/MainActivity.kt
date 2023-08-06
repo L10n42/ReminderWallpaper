@@ -69,7 +69,8 @@ private fun getStatusBarColor(destination: String?): Color {
 private val DestinationsWithSurfaceNavigationBar = listOf(
     Screen.AddEditQuoteScreen.route,
     Screen.AddEditTextScreen.route,
-    Screen.AddEditProgressScreen.route
+    Screen.AddEditProgressScreen.route,
+    Screen.AddEditPosterScreen.route
 )
 
 private val DestinationsWithBackgroundStatusBar = listOf(
