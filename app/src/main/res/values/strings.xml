@@ -46,5 +46,7 @@
     <string name="image_title">Image</string>
     <string name="info_title">Info</string>
     <string name="image_max_size_info_msg">Max size for image is %s. If the image is larger it will be resized.</string>
+    <string name="wrong_percent_value">Value must be within 0-100</string>
+    <string name="complete_title">"Complete: "</string>
 
 </resources>
