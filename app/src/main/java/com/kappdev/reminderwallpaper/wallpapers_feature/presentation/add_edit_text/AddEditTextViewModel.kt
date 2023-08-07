@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.Text
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.TextPosition
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.TextStyle
+import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.Wallpaper
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.use_case.TextPainter
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.common.ColorPickerState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,7 +34,7 @@ class AddEditTextViewModel @Inject constructor(
     var textPosition = mutableStateOf(TextPosition.CENTER)
         private set
 
-    var textStyle = mutableStateOf<TextStyle>(TextStyle.Normal)
+    var textStyle = mutableStateOf<TextStyle>(TextStyle.NORMAL)
         private set
 
     var fontSize = mutableStateOf(18)
@@ -48,13 +49,14 @@ class AddEditTextViewModel @Inject constructor(
     var sheetState = mutableStateOf<ColorPickerState?>(null)
         private set
 
-    fun createWallpaper(onFinish: (path: String?) -> Unit) {
+    fun createWallpaper(onFinish: (path: String?, data: Text) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             var wallpaperPath: String? = null
+            val text = packText()
             loading {
-                wallpaperPath = textPainter.draw(packText())
+                wallpaperPath = textPainter.draw(text)
             }
-            withContext(Dispatchers.Main) { onFinish(wallpaperPath) }
+            withContext(Dispatchers.Main) { onFinish(wallpaperPath, text) }
         }
     }
 
@@ -72,6 +74,18 @@ class AddEditTextViewModel @Inject constructor(
         isLoading.value = true
         block()
         isLoading.value = false
+    }
+
+    fun unpackData(wallpaper: Wallpaper?) {
+        if (wallpaper != null && wallpaper.data is Text) {
+            text.value = wallpaper.data.text
+            textAlign.value = wallpaper.data.align
+            textPosition.value = wallpaper.data.position
+            textStyle.value = wallpaper.data.style
+            fontSize.value = wallpaper.data.fontSize
+            background.value = wallpaper.data.background
+            foreground.value = wallpaper.data.foreground
+        }
     }
 
     fun hideSheet() {

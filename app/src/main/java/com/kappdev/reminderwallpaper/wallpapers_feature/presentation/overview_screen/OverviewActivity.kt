@@ -17,6 +17,8 @@ class OverviewActivity : ComponentActivity() {
 
     companion object {
         const val WALLPAPER_ID_EXTRA = "WALLPAPER_ID_EXTRA"
+        const val EDIT_RESULT = 543598
+        const val EMPTY_RESULT = 543020
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,11 +28,12 @@ class OverviewActivity : ComponentActivity() {
         setContent {
             ReminderWallpaperTheme {
                 val viewModel: OverviewImageViewModel = hiltViewModel()
-                val finish = viewModel.finish
+                val finishWithResult = viewModel.finishWithResult
                 ActivityHelper.TransparentSystemBars()
 
-                LaunchedEffect(finish) {
-                    if (finish) {
+                LaunchedEffect(finishWithResult) {
+                    if (finishWithResult != null) {
+                        this@OverviewActivity.setResult(finishWithResult)
                         this@OverviewActivity.finish()
                     }
                 }
@@ -51,9 +54,9 @@ class OverviewActivity : ComponentActivity() {
     }
 }
 
-fun Context.openWallpaperOverview(wallpaperId: Long) {
+fun Context.overviewActivityIntent(wallpaperId: Long): Intent {
     val overviewActivity = Intent(this, OverviewActivity::class.java)
     overviewActivity.putExtra(OverviewActivity.WALLPAPER_ID_EXTRA, wallpaperId)
-    this.startActivity(overviewActivity)
+    return overviewActivity
 }
 

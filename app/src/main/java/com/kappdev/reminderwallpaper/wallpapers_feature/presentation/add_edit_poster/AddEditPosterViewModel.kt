@@ -1,7 +1,6 @@
 package com.kappdev.reminderwallpaper.wallpapers_feature.presentation.add_edit_poster
 
 import android.app.Application
-import android.net.Uri
 import android.text.Layout
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
@@ -11,6 +10,7 @@ import com.kappdev.reminderwallpaper.R
 import com.kappdev.reminderwallpaper.core.util.showToast
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.Poster
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.TextStyle
+import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.Wallpaper
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.use_case.PosterPainter
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.common.ColorPickerState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,7 +34,7 @@ class AddEditPosterViewModel @Inject constructor(
     var textAlign = mutableStateOf(Layout.Alignment.ALIGN_CENTER)
         private set
 
-    var textStyle = mutableStateOf<TextStyle>(TextStyle.Normal)
+    var textStyle = mutableStateOf(TextStyle.NORMAL)
         private set
 
     var fontSize = mutableStateOf(18)
@@ -46,25 +46,26 @@ class AddEditPosterViewModel @Inject constructor(
     var foreground = mutableStateOf(Color.White)
         private set
 
-    var image = mutableStateOf<Uri?>(null)
+    var image = mutableStateOf<String?>(null)
         private set
 
     var sheetState = mutableStateOf<ColorPickerState?>(null)
         private set
 
-    fun createWallpaper(onFinish: (path: String?) -> Unit) {
+    fun createWallpaper(onFinish: (path: String?, data: Poster) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             ifImageExists { imageUri ->
                 var wallpaperPath: String? = null
+                val poster = packPoster(imageUri)
                 loading {
-                    wallpaperPath = posterPainter.draw(packPoster(imageUri))
+                    wallpaperPath = posterPainter.draw(poster)
                 }
-                withContext(Dispatchers.Main) { onFinish(wallpaperPath) }
+                withContext(Dispatchers.Main) { onFinish(wallpaperPath, poster) }
             }
         }
     }
 
-    private suspend fun ifImageExists(block: suspend (Uri) -> Unit) {
+    private suspend fun ifImageExists(block: suspend (String) -> Unit) {
         image.value?.let { block(it) } ?: makeError(R.string.select_image_msg)
     }
 
@@ -74,7 +75,7 @@ class AddEditPosterViewModel @Inject constructor(
         }
     }
 
-    private fun packPoster(image: Uri) = Poster(
+    private fun packPoster(image: String) = Poster(
         text = text.value.trim(),
         align = textAlign.value,
         style = textStyle.value,
@@ -88,6 +89,18 @@ class AddEditPosterViewModel @Inject constructor(
         isLoading.value = true
         block()
         isLoading.value = false
+    }
+
+    fun unpackData(wallpaper: Wallpaper?) {
+        if (wallpaper != null && wallpaper.data is Poster) {
+            text.value = wallpaper.data.text
+            textAlign.value = wallpaper.data.align
+            textStyle.value = wallpaper.data.style
+            fontSize.value = wallpaper.data.fontSize
+            background.value = wallpaper.data.background
+            foreground.value = wallpaper.data.foreground
+            image.value = wallpaper.data.image
+        }
     }
 
     fun hideSheet() {
@@ -118,7 +131,7 @@ class AddEditPosterViewModel @Inject constructor(
         textAlign.value = align
     }
 
-    fun setImage(image: Uri) {
+    fun setImage(image: String?) {
         this.image.value = image
     }
 

@@ -6,5 +6,6 @@
     <string name="back_to_home_btn">back_to_home_btn</string>
     <string name="remove_wallpaper_btn">remove_wallpaper_btn</string>
     <string name="share_wallpaper_btn">share_wallpaper_btn</string>
+    <string name="edit_wallpaper_btn">edit_wallpaper_btn</string>
     <string name="add_color_btn">add_color_btn</string>
 </resources>

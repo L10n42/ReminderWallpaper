@@ -22,13 +22,13 @@ fun TextStylePicker(
     ) {
         TitledCheckBox(
             title = stringResource(R.string.bold_title),
-            checked = (style is TextStyle.Bold || style is TextStyle.BoldItalic),
+            checked = (style == TextStyle.BOLD || style == TextStyle.BOLD_ITALIC),
             modifier = Modifier.fillMaxWidth(0.5f),
             onCheckedChange = { checked ->
                 val newStyle = if (checked) {
-                    if (style is TextStyle.Italic) TextStyle.BoldItalic else TextStyle.Bold
+                    if (style == TextStyle.ITALIC) TextStyle.BOLD_ITALIC else TextStyle.BOLD
                 } else {
-                    if (style is TextStyle.BoldItalic) TextStyle.Italic else TextStyle.Normal
+                    if (style == TextStyle.BOLD_ITALIC) TextStyle.ITALIC else TextStyle.NORMAL
                 }
                 onStyleChange(newStyle)
             }
@@ -36,12 +36,12 @@ fun TextStylePicker(
 
         TitledCheckBox(
             title = stringResource(R.string.italic_title),
-            checked = (style is TextStyle.Italic || style is TextStyle.BoldItalic),
+            checked = (style == TextStyle.ITALIC || style == TextStyle.BOLD_ITALIC),
             onCheckedChange = { checked ->
                 val newStyle = if (checked) {
-                    if (style is TextStyle.Bold) TextStyle.BoldItalic else TextStyle.Italic
+                    if (style == TextStyle.BOLD) TextStyle.BOLD_ITALIC else TextStyle.ITALIC
                 } else {
-                    if (style is TextStyle.BoldItalic) TextStyle.Bold else TextStyle.Normal
+                    if (style == TextStyle.BOLD_ITALIC) TextStyle.BOLD else TextStyle.NORMAL
                 }
                 onStyleChange(newStyle)
             }

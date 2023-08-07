@@ -4,12 +4,11 @@ import android.content.Context
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -20,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toFile
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.kappdev.reminderwallpaper.R
@@ -33,6 +33,7 @@ import com.kappdev.reminderwallpaper.core.common.components.InfoDialog
 import com.kappdev.reminderwallpaper.core.common.components.LoadingDialog
 import com.kappdev.reminderwallpaper.core.common.components.VerticalSpace
 import com.kappdev.reminderwallpaper.core.util.showToast
+import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.Wallpaper
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.WallpaperType
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.use_case.BitmapPainter
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.util.ScreenUtils
@@ -47,6 +48,7 @@ import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.save_wallpa
 @Composable
 fun AddEditPosterScreen(
     navController: NavHostController,
+    wallpaper: Wallpaper?,
     viewModel: AddEditPosterViewModel = hiltViewModel()
 ) {
     var showImageInfoDialog by rememberSaveable { mutableStateOf(false) }
@@ -61,6 +63,10 @@ fun AddEditPosterScreen(
     val foreground = viewModel.foreground.value
     val currentSheet = viewModel.sheetState.value
 
+    LaunchedEffect(Unit) {
+        viewModel.unpackData(wallpaper)
+    }
+
     if (currentSheet != null) {
         BottomSheetController(currentSheet, viewModel)
     }
@@ -72,7 +78,7 @@ fun AddEditPosterScreen(
     val imagePicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
-            uri?.let { viewModel.setImage(it) }
+            uri?.let { viewModel.setImage(it.toString()) }
         }
     )
 
@@ -92,10 +98,16 @@ fun AddEditPosterScreen(
             navController.popBackStack()
         },
         onDone = {
-            viewModel.createWallpaper { wallpaperPath ->
+            viewModel.createWallpaper { wallpaperPath, poster ->
                 if (wallpaperPath != null) {
                     saveWallpaperActivity.launch(
-                        context.saveActivityIntent(wallpaperPath, WallpaperType.Poster)
+                        context.saveActivityIntent(
+                            path = wallpaperPath,
+                            type = WallpaperType.Poster,
+                            data = poster,
+                            editId = wallpaper?.id,
+                            editPath = wallpaper?.path
+                        )
                     )
                 } else {
                     context.showToast(R.string.something_went_wrong_msg)

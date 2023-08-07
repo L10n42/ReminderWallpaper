@@ -11,4 +11,4 @@ data class Text(
     val fontSize: Int,
     val background: Color,
     val foreground: Color
-)
+) : WallpaperData()

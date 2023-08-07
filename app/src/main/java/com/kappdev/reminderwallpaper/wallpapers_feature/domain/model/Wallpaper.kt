@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import com.kappdev.reminderwallpaper.wallpapers_feature.domain.util.WallpaperDataConverter
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.util.WallpaperTypeConverter
 
 @Entity(tableName = "wallpapers")
@@ -18,5 +19,9 @@ data class Wallpaper(
 
     @ColumnInfo(name = "wallpaper_type")
     @TypeConverters(WallpaperTypeConverter::class)
-    val type: WallpaperType
+    val type: WallpaperType,
+
+    @ColumnInfo(name = "wallpaper_data")
+    @TypeConverters(WallpaperDataConverter::class)
+    val data: WallpaperData
 )

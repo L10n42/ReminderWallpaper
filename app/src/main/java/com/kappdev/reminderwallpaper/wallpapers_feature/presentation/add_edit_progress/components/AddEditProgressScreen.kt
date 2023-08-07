@@ -2,6 +2,7 @@ package com.kappdev.reminderwallpaper.wallpapers_feature.presentation.add_edit_p
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -16,6 +17,7 @@ import com.kappdev.reminderwallpaper.core.common.components.ForegroundColorSelec
 import com.kappdev.reminderwallpaper.core.common.components.LoadingDialog
 import com.kappdev.reminderwallpaper.core.common.components.VerticalSpace
 import com.kappdev.reminderwallpaper.core.util.showToast
+import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.Wallpaper
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.WallpaperType
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.add_edit_progress.AddEditProgressViewModel
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.add_edit_progress.ProgressSheetState
@@ -26,6 +28,7 @@ import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.save_wallpa
 @Composable
 fun AddEditProgressScreen(
     navController: NavHostController,
+    wallpaper: Wallpaper?,
     viewModel: AddEditProgressViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -36,6 +39,10 @@ fun AddEditProgressScreen(
     val textColor = viewModel.textColor.value
     val currentState = viewModel.sheetState.value
     val isLoading = viewModel.isLoading.value
+
+    LaunchedEffect(Unit) {
+        viewModel.unpackData(wallpaper)
+    }
 
     if (isLoading) {
         LoadingDialog()
@@ -53,10 +60,16 @@ fun AddEditProgressScreen(
             navController.popBackStack()
         },
         onDone = {
-            viewModel.createWallpaper { wallpaperPath ->
+            viewModel.createWallpaper { wallpaperPath, progress ->
                 if (wallpaperPath != null) {
                     saveWallpaperActivity.launch(
-                        context.saveActivityIntent(wallpaperPath, WallpaperType.Progress)
+                        context.saveActivityIntent(
+                            path = wallpaperPath,
+                            type = WallpaperType.Progress,
+                            data = progress,
+                            editId = wallpaper?.id,
+                            editPath = wallpaper?.path
+                        )
                     )
                 } else {
                     context.showToast(R.string.something_went_wrong_msg)

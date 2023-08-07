@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalContext
@@ -21,16 +22,19 @@ import com.kappdev.reminderwallpaper.core.common.components.ForegroundColorSelec
 import com.kappdev.reminderwallpaper.core.common.components.LoadingDialog
 import com.kappdev.reminderwallpaper.core.common.components.VerticalSpace
 import com.kappdev.reminderwallpaper.core.util.showToast
+import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.Wallpaper
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.WallpaperType
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.add_edit_quote.AddEditQuoteViewModel
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.common.ColorPickerState
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.common.components.AddEditScreen
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.save_wallpaper_screen.rememberSaveActivityLauncher
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.save_wallpaper_screen.saveActivityIntent
+import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun AddEditQuoteScreen(
     navController: NavHostController,
+    wallpaper: Wallpaper?,
     viewModel: AddEditQuoteViewModel = hiltViewModel()
 ) {
     val quote = viewModel.quote.value
@@ -41,6 +45,10 @@ fun AddEditQuoteScreen(
     val background = viewModel.background.value
     val foreground = viewModel.foreground.value
     val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.unpackData(wallpaper)
+    }
 
     if (currentSheet != null) {
         BottomSheetController(currentSheet, viewModel)
@@ -59,10 +67,16 @@ fun AddEditQuoteScreen(
             navController.popBackStack()
         },
         onDone = {
-            viewModel.createWallpaper { wallpaperPath ->
+            viewModel.createWallpaper { wallpaperPath, quote ->
                 if (wallpaperPath != null) {
                     saveWallpaperActivity.launch(
-                        context.saveActivityIntent(wallpaperPath, WallpaperType.Quote)
+                        context.saveActivityIntent(
+                            path = wallpaperPath,
+                            type = WallpaperType.Quote,
+                            data = quote,
+                            editId = wallpaper?.id,
+                            editPath = wallpaper?.path
+                        )
                     )
                 } else {
                     context.showToast(R.string.something_went_wrong_msg)

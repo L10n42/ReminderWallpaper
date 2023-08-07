@@ -9,6 +9,6 @@ object WallpaperTypeCards {
         WallpaperTypeCard(R.drawable.quote_example, R.string.quote_title, WallpaperType.Quote),
         WallpaperTypeCard(R.drawable.text_example, R.string.text_title, WallpaperType.Text),
         WallpaperTypeCard(R.drawable.progress_example, R.string.progress_title, WallpaperType.Progress),
-        WallpaperTypeCard(R.drawable.text_example, R.string.poster_title, WallpaperType.Poster)
+        WallpaperTypeCard(R.drawable.poster_example, R.string.poster_title, WallpaperType.Poster)
     )
 }

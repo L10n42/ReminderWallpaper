@@ -8,4 +8,4 @@ data class Progress(
     val background: Color,
     val textColor: Color,
     val chartColor: Color
-)
+) : WallpaperData()

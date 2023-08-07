@@ -2,6 +2,7 @@ package com.kappdev.reminderwallpaper.wallpapers_feature.presentation.add_edit_t
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -17,6 +18,7 @@ import com.kappdev.reminderwallpaper.core.common.components.ForegroundColorSelec
 import com.kappdev.reminderwallpaper.core.common.components.LoadingDialog
 import com.kappdev.reminderwallpaper.core.common.components.VerticalSpace
 import com.kappdev.reminderwallpaper.core.util.showToast
+import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.Wallpaper
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.WallpaperType
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.add_edit_text.AddEditTextViewModel
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.common.ColorPickerState
@@ -25,10 +27,12 @@ import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.common.comp
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.common.components.TextStylePicker
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.save_wallpaper_screen.rememberSaveActivityLauncher
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.save_wallpaper_screen.saveActivityIntent
+import kotlin.text.Typography.quote
 
 @Composable
 fun AddEditTextScreen(
     navController: NavHostController,
+    wallpaper: Wallpaper?,
     viewModel: AddEditTextViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -41,6 +45,10 @@ fun AddEditTextScreen(
     val foreground = viewModel.foreground.value
     val currentSheet = viewModel.sheetState.value
     val isLoading = viewModel.isLoading.value
+
+    LaunchedEffect(Unit) {
+        viewModel.unpackData(wallpaper)
+    }
 
     if (currentSheet != null) {
         BottomSheetController(currentSheet, viewModel)
@@ -58,10 +66,16 @@ fun AddEditTextScreen(
             navController.popBackStack()
         },
         onDone = {
-            viewModel.createWallpaper { wallpaperPath ->
+            viewModel.createWallpaper { wallpaperPath, text ->
                 if (wallpaperPath != null) {
                     saveWallpaperActivity.launch(
-                        context.saveActivityIntent(wallpaperPath, WallpaperType.Text)
+                        context.saveActivityIntent(
+                            path = wallpaperPath,
+                            type = WallpaperType.Text,
+                            data = text,
+                            editId = wallpaper?.id,
+                            editPath = wallpaper?.path
+                        )
                     )
                 } else {
                     context.showToast(R.string.something_went_wrong_msg)

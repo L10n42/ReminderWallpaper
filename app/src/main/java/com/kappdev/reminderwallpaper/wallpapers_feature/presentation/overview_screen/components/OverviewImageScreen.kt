@@ -10,6 +10,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBackIos
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +32,7 @@ import coil.compose.SubcomposeAsyncImage
 import com.kappdev.reminderwallpaper.R
 import com.kappdev.reminderwallpaper.core.common.components.ConfirmationDialog
 import com.kappdev.reminderwallpaper.core.common.components.TransparencyImageButton
+import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.common.IconButton
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.overview_screen.OverviewImageViewModel
 
 @Composable
@@ -73,6 +76,7 @@ fun OverviewImageScreen(
                     .statusBarsPadding(),
                 onBack = viewModel::goBack,
                 onShare = viewModel::shareWallpaper,
+                onEdit = viewModel::goEdit,
                 onRemove = {
                     showRemoveConfirmation = true
                 }
@@ -92,9 +96,17 @@ private fun OverviewTopBar(
     modifier: Modifier = Modifier,
     onBack: () -> Unit,
     onRemove: () -> Unit,
-    onShare: () -> Unit
+    onShare: () -> Unit,
+    onEdit: () -> Unit
 ) {
     val contentColor = MaterialTheme.colorScheme.primary.copy(0.7f)
+    val actions = rememberSaveable {
+        listOf(
+            IconButton(Icons.Rounded.Share, R.string.share_wallpaper_btn, onShare),
+            IconButton(Icons.Rounded.Edit, R.string.edit_wallpaper_btn, onEdit),
+            IconButton(Icons.Rounded.Delete, R.string.remove_wallpaper_btn, onRemove),
+        )
+    }
     TopAppBar(
         elevation = 0.dp,
         modifier = modifier,
@@ -117,20 +129,29 @@ private fun OverviewTopBar(
             }
         },
         actions = {
-            IconButton(onClick = onShare) {
-                Icon(
-                    imageVector = Icons.Rounded.Share,
-                    contentDescription = stringResource(R.string.share_wallpaper_btn),
-                    tint = contentColor
-                )
+            actions.forEach { button ->
+                IconButton(onClick = button.onClick) {
+                    Icon(
+                        imageVector = button.icon,
+                        contentDescription = stringResource(button.descriptionRes),
+                        tint = contentColor
+                    )
+                }
             }
-            IconButton(onClick = onRemove) {
-                Icon(
-                    imageVector = Icons.Rounded.Delete,
-                    contentDescription = stringResource(R.string.remove_wallpaper_btn),
-                    tint = contentColor
-                )
-            }
+//            IconButton(onClick = onEdit) {
+//                Icon(
+//                    imageVector = Icons.Rounded.Edit,
+//                    contentDescription = stringResource(R.string.edit_wallpaper_btn),
+//                    tint = contentColor
+//                )
+//            }
+//            IconButton(onClick = onRemove) {
+//                Icon(
+//                    imageVector = Icons.Rounded.Delete,
+//                    contentDescription = stringResource(R.string.remove_wallpaper_btn),
+//                    tint = contentColor
+//                )
+//            }
         }
     )
 }

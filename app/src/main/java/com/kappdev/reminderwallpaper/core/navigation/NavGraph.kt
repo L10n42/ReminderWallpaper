@@ -1,6 +1,7 @@
 package com.kappdev.reminderwallpaper.core.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,27 +16,33 @@ import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.new_wallpap
 fun SetupNavGraph(
     navController: NavHostController
 ) {
+    val sharedViewModel: SharedViewModel = viewModel()
+    val editWallpaper = sharedViewModel.editWallpaper.value
     NavHost(
         navController = navController,
         startDestination = Screen.HomeScreen.route
     ) {
         composable(Screen.HomeScreen.route) {
-            HomeScreen(navController)
+            HomeScreen(navController) { route, data ->
+                sharedViewModel.setEditWallpaper(data)
+                navController.navigate(route)
+            }
         }
         composable(Screen.NewWallpaperScreen.route) {
             NewWallpaperScreen(navController)
         }
+
         composable(Screen.AddEditQuoteScreen.route) {
-            AddEditQuoteScreen(navController)
+            AddEditQuoteScreen(navController, editWallpaper)
         }
         composable(Screen.AddEditTextScreen.route) {
-            AddEditTextScreen(navController)
+            AddEditTextScreen(navController, editWallpaper)
         }
         composable(Screen.AddEditProgressScreen.route) {
-            AddEditProgressScreen(navController)
+            AddEditProgressScreen(navController, editWallpaper)
         }
         composable(Screen.AddEditPosterScreen.route) {
-            AddEditPosterScreen(navController)
+            AddEditPosterScreen(navController, editWallpaper)
         }
     }
 }

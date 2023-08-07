@@ -8,4 +8,4 @@ data class Quote(
     val fontSize: Int,
     val background: Color,
     val foreground: Color
-)
+) : WallpaperData()

@@ -27,7 +27,7 @@ class OverviewImageViewModel @Inject constructor(
     private val app: Application
 ) : ViewModel() {
 
-    var finish by mutableStateOf(false)
+    var finishWithResult by mutableStateOf<Int?>(null)
         private set
 
     var wallpaper by mutableStateOf<Wallpaper?>(null)
@@ -37,7 +37,7 @@ class OverviewImageViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             wallpaper = getWallpaper(id)
             if (wallpaper == null) {
-                finish()
+                finishWithResult(OverviewActivity.EMPTY_RESULT)
             }
         }
     }
@@ -55,7 +55,7 @@ class OverviewImageViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val result = wallpaper?.let { removeWallpaper(it) }
             if (result != null && result > 0) {
-                finish()
+                finishWithResult(OverviewActivity.EMPTY_RESULT)
             } else {
                 app.showToast(R.string.couldnt_remove_image)
             }
@@ -68,9 +68,10 @@ class OverviewImageViewModel @Inject constructor(
         }
     }
 
-    fun goBack() = finish()
+    fun goEdit() = finishWithResult(OverviewActivity.EDIT_RESULT)
+    fun goBack() = finishWithResult(OverviewActivity.EMPTY_RESULT)
 
-    private fun finish() {
-        this.finish = true
+    private fun finishWithResult(resultCode: Int) {
+        this.finishWithResult = resultCode
     }
 }

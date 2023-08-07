@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.Quote
+import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.Wallpaper
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.use_case.QuotesPainter
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.common.ColorPickerState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,13 +40,14 @@ class AddEditQuoteViewModel @Inject constructor(
     var sheetState = mutableStateOf<ColorPickerState?>(null)
         private set
 
-    fun createWallpaper(onFinish: (path: String?) -> Unit) {
+    fun createWallpaper(onFinish: (path: String?, data: Quote) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             var wallpaperPath: String? = null
+            val quote = packQuote()
             loading {
-                wallpaperPath = quotesPainter.draw(packQuote())
+                wallpaperPath = quotesPainter.draw(quote)
             }
-            withContext(Dispatchers.Main) { onFinish(wallpaperPath) }
+            withContext(Dispatchers.Main) { onFinish(wallpaperPath, quote) }
         }
     }
 
@@ -61,6 +63,16 @@ class AddEditQuoteViewModel @Inject constructor(
         isLoading.value = true
         block()
         isLoading.value = false
+    }
+
+    fun unpackData(wallpaper: Wallpaper?) {
+        if (wallpaper != null && wallpaper.data is Quote) {
+            quote.value = wallpaper.data.quote
+            author.value = wallpaper.data.author
+            fontSize.value = wallpaper.data.fontSize
+            background.value = wallpaper.data.background
+            foreground.value = wallpaper.data.foreground
+        }
     }
 
     fun setForeground(color: Color) {

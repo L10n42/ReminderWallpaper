@@ -1,6 +1,5 @@
 package com.kappdev.reminderwallpaper.wallpapers_feature.domain.model
 
-import android.net.Uri
 import android.text.Layout
 import androidx.compose.ui.graphics.Color
 
@@ -11,5 +10,5 @@ data class Poster(
     val fontSize: Int,
     val background: Color,
     val foreground: Color,
-    val image: Uri
-)
+    val image: String,
+) : WallpaperData()

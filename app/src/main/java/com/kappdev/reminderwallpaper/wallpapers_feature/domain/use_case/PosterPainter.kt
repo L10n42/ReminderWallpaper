@@ -99,9 +99,9 @@ class PosterPainter @Inject constructor(
         return resizedBitmap
     }
 
-    private fun decodeImage(uri: Uri): Bitmap {
+    private fun decodeImage(path: String): Bitmap {
         val contentResolver = context.contentResolver
-        val inputStream = contentResolver.openInputStream(uri)
+        val inputStream = contentResolver.openInputStream(Uri.parse(path))
         val bitmap = BitmapFactory.decodeStream(inputStream)
         inputStream!!.close()
         return bitmap

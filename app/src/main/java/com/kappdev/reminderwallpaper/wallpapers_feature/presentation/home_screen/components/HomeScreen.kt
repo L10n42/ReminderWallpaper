@@ -1,5 +1,7 @@
 package com.kappdev.reminderwallpaper.wallpapers_feature.presentation.home_screen.components
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
@@ -32,21 +34,48 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.kappdev.reminderwallpaper.R
 import com.kappdev.reminderwallpaper.core.navigation.Screen
+import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.Wallpaper
+import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.WallpaperType
 import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.home_screen.HomeViewModel
-import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.overview_screen.openWallpaperOverview
+import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.overview_screen.OverviewActivity
+import com.kappdev.reminderwallpaper.wallpapers_feature.presentation.overview_screen.overviewActivityIntent
 
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    goToEdit: (route: String, data: Wallpaper) -> Unit
 ) {
     val context = LocalContext.current
     var scrollToTop by remember { mutableStateOf(true) }
+    var openedWallpaper: Wallpaper? = remember { null }
     val wallpapers = viewModel.wallpapers.value
 
     LaunchedEffect(Unit) {
         viewModel.fetchWallpapers()
     }
+
+    val overviewLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+        onResult = { result ->
+            when (result.resultCode) {
+                OverviewActivity.EMPTY_RESULT -> {
+                    openedWallpaper = null
+                }
+                OverviewActivity.EDIT_RESULT -> {
+                    openedWallpaper?.let { wallpaper ->
+                        val route = when (wallpaper.type) {
+                            WallpaperType.Text -> Screen.AddEditTextScreen.route
+                            WallpaperType.Poster -> Screen.AddEditPosterScreen.route
+                            WallpaperType.Progress -> Screen.AddEditProgressScreen.route
+                            WallpaperType.Quote -> Screen.AddEditQuoteScreen.route
+                        }
+                        goToEdit(route, wallpaper)
+                    }
+                }
+            }
+        }
+    )
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -87,7 +116,9 @@ fun HomeScreen(
                         .fillMaxWidth()
                         .height(200.dp)
                 ) {
-                    context.openWallpaperOverview(wallpaper.id)
+                    val intent = context.overviewActivityIntent(wallpaper.id)
+                    openedWallpaper = wallpaper
+                    overviewLauncher.launch(intent)
                 }
             }
         }

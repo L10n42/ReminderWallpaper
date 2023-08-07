@@ -6,12 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kappdev.reminderwallpaper.ui.theme.PrimaryColor
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.Progress
+import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.Quote
+import com.kappdev.reminderwallpaper.wallpapers_feature.domain.model.Wallpaper
 import com.kappdev.reminderwallpaper.wallpapers_feature.domain.use_case.ProgressPainter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.text.Typography.quote
 
 @HiltViewModel
 class AddEditProgressViewModel @Inject constructor(
@@ -39,13 +42,14 @@ class AddEditProgressViewModel @Inject constructor(
     var sheetState = mutableStateOf<ProgressSheetState?>(null)
         private set
 
-    fun createWallpaper(onFinish: (path: String?) -> Unit) {
+    fun createWallpaper(onFinish: (path: String?, data: Progress) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             var wallpaperPath: String? = null
+            val progress = packProgress()
             loading {
-                wallpaperPath = progressPainter.draw(packProgress())
+                wallpaperPath = progressPainter.draw(progress)
             }
-            withContext(Dispatchers.Main) { onFinish(wallpaperPath) }
+            withContext(Dispatchers.Main) { onFinish(wallpaperPath, progress) }
         }
     }
 
@@ -61,6 +65,16 @@ class AddEditProgressViewModel @Inject constructor(
         isLoading.value = true
         block()
         isLoading.value = false
+    }
+
+    fun unpackData(wallpaper: Wallpaper?) {
+        if (wallpaper != null && wallpaper.data is Progress) {
+            goal.value = wallpaper.data.goal
+            complete.value = wallpaper.data.complete
+            background.value = wallpaper.data.background
+            textColor.value = wallpaper.data.textColor
+            chartColor.value = wallpaper.data.chartColor
+        }
     }
 
     fun hideSheet() {
