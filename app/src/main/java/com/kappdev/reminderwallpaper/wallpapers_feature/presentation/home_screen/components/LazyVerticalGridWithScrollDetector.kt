@@ -13,6 +13,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
+import kotlin.math.abs
 
 @Composable
 fun LazyVerticalGridWithScrollDetector(
@@ -34,8 +35,8 @@ fun LazyVerticalGridWithScrollDetector(
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 val delta = available.y
                 when {
-                    delta < 0 -> onScroll(ScrollDirection.Bottom)
-                    delta > 0 -> onScroll(ScrollDirection.Top)
+                    (delta < 0 && abs(delta) > MIN_SCROLL_DISTANCE) -> onScroll(ScrollDirection.Bottom)
+                    (delta > 0 && abs(delta) > MIN_SCROLL_DISTANCE) -> onScroll(ScrollDirection.Top)
                 }
                 return Offset.Zero
             }
@@ -55,6 +56,8 @@ fun LazyVerticalGridWithScrollDetector(
         content = content
     )
 }
+
+private const val MIN_SCROLL_DISTANCE = 30f
 
 enum class ScrollDirection {
     Top, Bottom
