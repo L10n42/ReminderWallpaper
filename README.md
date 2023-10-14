@@ -1,0 +1,16 @@
+# ReminderWallpaper
+
+![Screenshot_2023-10-14-15-46-53-451_com kappdev reminderwallpaper](https://github.com/L10n42/ReminderWallpaper/assets/108233306/f41c85af-3e6d-4029-bc20-010ef27ab8aa)
+![Screenshot_2023-10-14-15-53-58-852_com kappdev reminderwallpaper](https://github.com/L10n42/ReminderWallpaper/assets/108233306/52140de3-7ef3-4dbb-bc6c-a31e56dc6f9a)
+![Screenshot_2023-10-14-15-53-54-328_com kappdev reminderwallpaper](https://github.com/L10n42/ReminderWallpaper/assets/108233306/22f9c644-2da7-4b20-9040-f096de9612c4)
+![Screenshot_2023-10-14-15-53-49-563_com kappdev reminderwallpaper](https://github.com/L10n42/ReminderWallpaper/assets/108233306/bf72e776-f8da-4308-91a8-6cef1c8f9792)
+![Screenshot_2023-10-14-15-52-23-124_com kappdev reminderwallpaper](https://github.com/L10n42/ReminderWallpaper/assets/108233306/2a145af0-eec7-4f69-8c45-6e1021eaadbe)
+![Screenshot_2023-10-14-15-52-17-829_com kappdev reminderwallpaper](https://github.com/L10n42/ReminderWallpaper/assets/108233306/d42d1101-89c8-46b6-8cd9-94a33372d8fe)
+![Screenshot_2023-10-14-15-51-49-448_com kappdev reminderwallpaper](https://github.com/L10n42/ReminderWallpaper/assets/108233306/5113fbe5-16ff-4d9d-a044-661c678f4543)
+![Screenshot_2023-10-14-15-51-45-537_com kappdev reminderwallpaper](https://github.com/L10n42/ReminderWallpaper/assets/108233306/fce49a75-fcbc-4dca-b8b5-0d7b410aa298)
+![Screenshot_2023-10-14-15-51-25-485_com kappdev reminderwallpaper](https://github.com/L10n42/ReminderWallpaper/assets/108233306/b67d5d9c-ebf6-419f-a1bc-47876828c91f)
+![Screenshot_2023-10-14-15-50-56-982_com kappdev reminderwallpaper](https://github.com/L10n42/ReminderWallpaper/assets/108233306/6ebda595-e5c3-4a11-92f0-9f383de9fd76)
+![Screenshot_2023-10-14-15-50-39-442_com kappdev reminderwallpaper](https://github.com/L10n42/ReminderWallpaper/assets/108233306/48b857f1-18f9-4883-bc4b-f7e0162e2283)
+![Screenshot_2023-10-14-15-50-29-097_com kappdev reminderwallpaper](https://github.com/L10n42/ReminderWallpaper/assets/108233306/435e562d-7bb9-4beb-9e3b-6ce41aac8906)
+![Screenshot_2023-10-14-15-48-22-885_com kappdev reminderwallpaper](https://github.com/L10n42/ReminderWallpaper/assets/108233306/f890b8c8-c496-4e36-a84c-ffee114e9302)
+![Screenshot_2023-10-14-15-47-09-211_com kappdev reminderwallpaper](https://github.com/L10n42/ReminderWallpaper/assets/108233306/5586db95-05d2-42b9-bb8a-1c45bd852fa0)
